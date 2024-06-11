@@ -29,7 +29,7 @@ interface VideoCardProps {
   image: string;
 }
 
-const YoutubeCard = ({ title, author, view, year, image }: VideoCardProps) => {
+const VideoCard = ({ title, author, view, year, image }: VideoCardProps) => {
   const maxLength = 60;
   const truncatedTitle = truncateText(title, maxLength);
   return (
@@ -79,4 +79,4 @@ const YoutubeCard = ({ title, author, view, year, image }: VideoCardProps) => {
   );
 };
 
-export default YoutubeCard;
+export default VideoCard;

@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
 import { AiOutlinePlaySquare } from "react-icons/ai";
 import { GoHomeFill } from "react-icons/go";
 import { MdOutlineSubscriptions } from "react-icons/md";
@@ -23,7 +25,7 @@ const NAV_ITEMS = [
 
 const LeftSidebar = () => {
   return (
-    <aside className="fixed top-[66px] w-[72px] h-full flex flex-col items-center px-1">
+    <aside className="hidden sm:flex fixed top-[66px] w-[72px] h-full flex-col items-center px-1">
       {NAV_ITEMS.map((item) => (
         <Link
           key={item.title}
