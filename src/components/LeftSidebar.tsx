@@ -26,6 +26,7 @@ const LeftSidebar = () => {
     <aside className="fixed top-[66px] w-[72px] h-full flex flex-col items-center px-1">
       {NAV_ITEMS.map((item) => (
         <Link
+          key={item.title}
           href={item.path ? item.path.toLowerCase() : item.title.toLowerCase()}
           className="flex flex-col items-center gap-1 py-4 hover:bg-white/10 w-full rounded-lg cursor-pointer"
         >

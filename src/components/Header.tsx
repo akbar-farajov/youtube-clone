@@ -9,7 +9,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 
 const Header = () => {
   return (
-    <header className="fixed top-0 left-0 z-50 right-0 flex items-center justify-between px-4 py-3 bg-background">
+    <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-3 bg-background w-full">
       <div className="flex items-center gap-2">
         <div className="p-2 rounded-full hover:bg-white/10">
           <RxHamburgerMenu className="w-6 h-6 text-white cursor-pointer" />
