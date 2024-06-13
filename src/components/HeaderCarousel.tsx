@@ -22,13 +22,13 @@ const HeaderCarousel = ({
         opts={{
           align: "center",
         }}
-        className="w-full px-10  bg-background py-3"
+        className="w-full px-2 sm:px-10  bg-background py-3"
       >
         <CarouselContent className="flex items-center">
           {categories.map((item, index) => (
             <CarouselItem
               key={index}
-              className="basis-1/3 sm:basis-1/6 md:basis-[15%] lg:basis-[10%]"
+              className="basis-1/5 sm:basis-1/6 md:basis-[15%] lg:basis-[10%]"
               onClick={() => setSelectedCategory(item.name)}
             >
               <div className="p-1">
@@ -40,7 +40,7 @@ const HeaderCarousel = ({
                 >
                   <div className="flex items-center justify-center p-1">
                     <span
-                      className="text-sm text-foreground"
+                      className="text-xs sm:text-sm text-foreground"
                       style={{
                         color: selectedCategory === item.name ? "black" : "",
                       }}
@@ -53,8 +53,8 @@ const HeaderCarousel = ({
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="absolute left-2" />
-        <CarouselNext className="absolute right-2" />
+        <CarouselPrevious className="absolute left-2 hidden sm:flex" />
+        <CarouselNext className="absolute right-2 hidden sm:flex" />
       </Carousel>
     </div>
   );
