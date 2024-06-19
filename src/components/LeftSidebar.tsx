@@ -25,7 +25,7 @@ const NAV_ITEMS = [
 
 const LeftSidebar = () => {
   return (
-    <aside className="hidden sm:flex fixed top-[66px] w-[72px] h-full flex-col items-center px-1">
+    <aside className="hidden sm:flex fixed top-[66px] w-[72px] h-full flex-col items-center px-1 z-50">
       {NAV_ITEMS.map((item) => (
         <Link
           key={item.title}
