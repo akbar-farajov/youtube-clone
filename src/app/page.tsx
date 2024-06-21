@@ -27,6 +27,8 @@ const Home = () => {
     fetchData();
   }, [selectedCategory]);
 
+  console.log(videos);
+
   return (
     <div className="h-full bg-background">
       <div className="">

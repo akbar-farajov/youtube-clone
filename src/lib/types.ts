@@ -17,3 +17,12 @@ export interface Video {
     };
   };
 }
+
+export interface VideoDetail {
+  id: string;
+  snippet: Video["snippet"];
+  statistics: {
+    viewCount: string;
+    likeCount: string;
+  };
+}

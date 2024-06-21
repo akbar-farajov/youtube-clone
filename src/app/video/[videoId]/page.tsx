@@ -1,67 +1,62 @@
 "use client";
+import VideoPlayer from "@/components/VideoPlayer";
 import { fetchFromAPI } from "@/lib/fetchFromApi";
-import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
+import { Video, VideoDetail } from "@/lib/types";
+import React, { useState, useEffect } from "react";
 
-interface VideoDetail {
-  snippet: {
-    title: string;
-    description: string;
-  };
-  statistics: {
-    viewCount: string;
-    likeCount: string;
-  };
-}
-
-const VideoPage = () => {
+const VideoPage = ({ params }: { params: { videoId: string } }) => {
   const [videoDetail, setVideoDetail] = useState<VideoDetail | null>(null);
-  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchFromAPI(
-          `videos?part=snippet,statistics&id=${id}`
+          `videos?part=snippet,statistics&id=${params.videoId}`
         );
-        setVideoDetail(data.items[0]);
+        const video = data.items[0] as VideoDetail;
+        setVideoDetail(video);
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        setError("Video not found");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
-  }, [id]);
+  }, [params.videoId]);
 
-  if (!videoDetail) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
+  if (error || !videoDetail) {
+    return <div>{error || "Video not found"}</div>;
+  }
+
   return (
-    <div className="container mx-auto p-4">
-      <div className="video-container">
-        <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${id}`}
-          width="100%"
-          height="500px"
-          controls
-        />
-      </div>
-      <div className="video-details mt-4">
-        <h1 className="text-2xl font-bold">
-          {videoDetail.snippet?.title || "Title not available"}
-        </h1>
-        <p>{videoDetail.snippet.description}</p>
-        <div className="mt-2">
-          <span className="font-semibold">Views:</span>{" "}
-          {videoDetail.statistics.viewCount}
+    <div className="w-full p-4">
+      <div>
+        <div className="w-full">
+          <VideoPlayer id={params.videoId} />
         </div>
-        <div className="mt-2">
-          <span className="font-semibold">Likes:</span>{" "}
-          {videoDetail.statistics.likeCount}
+        <div className="video-details mt-4">
+          <h1 className="text-2xl font-bold">
+            {videoDetail.snippet.title || "Title not available"}
+          </h1>
+          <div className="mt-2">
+            <span className="font-semibold">Views:</span>{" "}
+            {videoDetail.statistics.viewCount}
+          </div>
+          <div className="mt-2">
+            <span className="font-semibold">Likes:</span>{" "}
+            {videoDetail.statistics.likeCount}
+          </div>
         </div>
       </div>
+      <div className="flex flex-col"></div>
     </div>
   );
 };
