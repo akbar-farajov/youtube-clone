@@ -56,7 +56,9 @@ const VideoPage = ({ params }: { params: { videoId: string } }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col"></div>
+      <div className="flex flex-col">
+        
+      </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { truncateText } from "@/lib/utils";
 import { Video } from "@/lib/types";
 import Image from "next/image";
+import { useState } from "react";
 import {
   demoChannelTitle,
   demoThumbnailUrl,
@@ -20,11 +21,17 @@ const VideoCard = ({
     snippet,
   },
 }: VideoCardProps) => {
+  const [thumbnailUrl, setThumbnailUrl] = useState(
+    snippet?.thumbnails?.high?.url || demoThumbnailUrl
+  );
   const maxLength = 40;
   const title = snippet?.title || demoVideoTitle;
   const truncatedTitle = truncateText(title, maxLength);
-  const thumbnailUrl = snippet?.thumbnails?.high?.url || demoThumbnailUrl;
   const channelTitle = snippet?.channelTitle || demoChannelTitle;
+
+  const handleError = () => {
+    setThumbnailUrl(demoThumbnailUrl);
+  };
 
   return (
     <Link href={`/video/${videoId}`}>
@@ -33,37 +40,23 @@ const VideoCard = ({
           className="relative w-full p-0"
           style={{ aspectRatio: "16/9" }}
         >
-          {/* <Image
+          <Image
             src={thumbnailUrl}
-            fill
-            sizes="80vw"
-            alt="img"
+            alt={title}
+            layout="fill"
+            objectFit="cover"
             className="rounded-2xl"
-            priority
-            onError={(e) => e.target. = '/path/to/fallback-image.jpg'}
-          /> */}
-          <img
-            src={thumbnailUrl}
-            alt="img"
-            className="rounded-2xl w-full h-full object-cover"
-            style={{ aspectRatio: "16/9" }}
-            onError={(e) => {
-              e.currentTarget.onerror = null; // Prevent looping
-              e.currentTarget.src = demoThumbnailUrl;
-            }}
+            onError={handleError}
           />
         </CardContent>
-        <CardFooter className="p-0 w-full flex gap-2  items-start justify-between mt-1">
+        <CardFooter className="p-0 w-full flex gap-2 items-start justify-between mt-1">
           <div>
-            <div className="w-8 h-8  rounded-full bg-slate-400"></div>
+            <div className="w-8 h-8 rounded-full bg-slate-400"></div>
           </div>
           <div className="w-full flex items-start justify-between gap-2">
             <div className="flex-1">
               <p className="">{truncatedTitle}</p>
               <span className="text-md text-white/35">{channelTitle}</span>
-              {/* <p className="flex items-center text-md text-white/35 font-extralight">
-              {view} views <LuDot /> <span>{year} year ago</span>
-            </p> */}
             </div>
           </div>
         </CardFooter>
